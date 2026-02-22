@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>asgineer | New Post</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Quill editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+  <!-- KaTeX for LaTeX math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .editor-layout { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .editor-header { display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .editor-header h1 { font-size: 1.6rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; margin-bottom: .4rem; font-weight: 600; font-size: .88rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: .65rem 1rem; border: 1.5px solid var(--color-border);
+      border-radius: var(--radius); font-size: .95rem; font-family: var(--font-main);
+      transition: border-color var(--transition); background: var(--color-bg);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--color-accent);
+    }
+    .form-group textarea { resize: vertical; min-height: 72px; }
+
+    /* Quill */
+    #editor-container {
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+    }
+    #editor-container .ql-toolbar {
+      border: none; border-bottom: 1px solid var(--color-border);
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: var(--color-bg);
+    }
+    #editor-container .ql-container {
+      border: none; font-size: 1rem; font-family: var(--font-main);
+      min-height: 420px;
+    }
+    #editor-container .ql-editor { min-height: 420px; padding: 1.2rem; line-height: 1.8; }
+
+    /* Latex helper */
+    .latex-helper {
+      background: var(--color-bg-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+    }
+    .latex-helper summary {
+      cursor: pointer; font-weight: 600; font-size: .88rem; color: var(--color-accent);
+      list-style: none; display: flex; align-items: center; gap: .5rem;
+    }
+    .latex-helper summary::before { content: '▶'; font-size: .65rem; }
+    details[open] .latex-helper summary::before { content: '▼'; }
+    .latex-codes {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: .5rem; margin-top: .8rem;
+    }
+    .latex-code {
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: 4px; padding: .35rem .7rem; font-size: .82rem;
+      font-family: var(--font-mono); cursor: pointer;
+      transition: background var(--transition);
+    }
+    .latex-code:hover { background: rgba(46,134,222,.1); }
+
+    /* Emoji picker row */
+    .emoji-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; }
+    .emoji-btn {
+      width: 38px; height: 38px; border: 1.5px solid var(--color-border);
+      border-radius: 6px; background: var(--color-bg); font-size: 1.3rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .emoji-btn:hover, .emoji-btn.selected { border-color: var(--color-accent);
+      background: rgba(46,134,222,.1); }
+
+    .publish-bar {
+      display: flex; align-items: center; gap: 1rem; margin-top: 2rem;
+      padding-top: 1.5rem; border-top: 1px solid var(--color-border); flex-wrap: wrap;
+    }
+    .form-error { color: #e74c3c; font-size: .88rem; font-weight: 500; }
+    .form-success { color: #27ae60; font-size: .88rem; font-weight: 500; }
+
+    /* Image upload in toolbar */
+    .ql-image-upload { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="editor-layout">
+
+      <div class="editor-header">
+        <div>
+          <h1 id="page-title">✍️ New Post</h1>
+          <p style="color:var(--color-text-muted);font-size:.88rem">
+            Compose a blog post. Your article will appear in the Blog section after publishing.
+          </p>
+        </div>
+        <a href="blog.html" class="btn btn-outline">← Back to Blog</a>
+      </div>
+
+      <!-- Meta fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Post Title *</label>
+          <input type="text" id="title" placeholder="Enter an engaging title…" maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category">
+            <option value="technical">⚙️ Technical</option>
+            <option value="travel">🏔️ Travel</option>
+            <option value="diy">🔧 DIY</option>
+            <option value="general">📌 General</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="excerpt">Short Excerpt (shown on blog listing)</label>
+        <textarea id="excerpt" placeholder="A brief 1–2 sentence summary of the post…" maxlength="300"></textarea>
+      </div>
+
+      <!-- Cover emoji -->
+      <div class="form-group">
+        <label>Cover Emoji</label>
+        <input type="text" id="cover-emoji-input" value="📝" maxlength="4" style="width:80px;text-align:center;font-size:1.5rem" />
+        <div class="emoji-row" id="emoji-row">
+          <button class="emoji-btn selected" data-emoji="📝">📝</button>
+          <button class="emoji-btn" data-emoji="⚙️">⚙️</button>
+          <button class="emoji-btn" data-emoji="🤖">🤖</button>
+          <button class="emoji-btn" data-emoji="🏔️">🏔️</button>
+          <button class="emoji-btn" data-emoji="🔧">🔧</button>
+          <button class="emoji-btn" data-emoji="💡">💡</button>
+          <button class="emoji-btn" data-emoji="📡">📡</button>
+          <button class="emoji-btn" data-emoji="🔬">🔬</button>
+          <button class="emoji-btn" data-emoji="🌿">🌿</button>
+          <button class="emoji-btn" data-emoji="✈️">✈️</button>
+          <button class="emoji-btn" data-emoji="🏕️">🏕️</button>
+          <button class="emoji-btn" data-emoji="🎒">🎒</button>
+        </div>
+      </div>
+
+      <!-- LaTeX helper -->
+      <details style="margin-bottom:1.2rem">
+        <summary class="latex-helper" style="padding:.8rem 1rem;background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius);cursor:pointer;font-weight:600;font-size:.88rem;color:var(--color-accent);list-style:none">
+          📐 Insert LaTeX / Math formula
+        </summary>
+        <div class="latex-helper" style="margin-top:.4rem;border-top:none;border-radius:0 0 var(--radius) var(--radius)">
+          <p style="font-size:.83rem;color:var(--color-text-muted);margin-bottom:.8rem">
+            Type a LaTeX expression, then click <strong>Insert Inline</strong> or <strong>Insert Block</strong>.
+            Formulas are rendered with KaTeX when viewing the post.
+          </p>
+          <div style="display:flex;gap:.7rem;margin-bottom:.8rem;flex-wrap:wrap">
+            <input type="text" id="latex-input" placeholder="e.g.  F = ma  or  \int_0^\infty e^{-x} dx"
+              style="flex:1;min-width:220px;padding:.55rem .9rem;border:1.5px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-mono);font-size:.88rem;" />
+            <button class="btn btn-outline" style="padding:.5rem 1rem;font-size:.85rem" onclick="insertLatex('inline')">Insert Inline $…$</button>
+            <button class="btn btn-outline" style="padding:.5rem 1rem;font-size:.85rem" onclick="insertLatex('block')">Insert Block $$…$$</button>
+          </div>
+          <div class="latex-codes">
+            <code class="latex-code" onclick="fillLatex(this)">F = ma</code>
+            <code class="latex-code" onclick="fillLatex(this)">\frac{d}{dt}\vec{r}</code>
+            <code class="latex-code" onclick="fillLatex(this)">\int_0^\infty e^{-x} dx</code>
+            <code class="latex-code" onclick="fillLatex(this)">\sum_{i=1}^{n} x_i</code>
+            <code class="latex-code" onclick="fillLatex(this)">\tau = K(\theta_d - \theta)</code>
+            <code class="latex-code" onclick="fillLatex(this)">\nabla^2 f = 0</code>
+          </div>
+        </div>
+      </details>
+
+      <!-- Quill Editor -->
+      <div class="form-group">
+        <label>Post Body *</label>
+        <div id="editor-container">
+          <div id="quill-editor"></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--color-text-muted);margin-top:.4rem">
+          Supports rich text, code blocks, images, headings, lists, and LaTeX math (via the helper above).
+        </p>
+      </div>
+
+      <!-- Action bar -->
+      <div class="publish-bar">
+        <button class="btn btn-primary" id="publish-btn">🚀 Publish Post</button>
+        <button class="btn btn-outline" id="draft-btn">💾 Save Draft</button>
+        <div>
+          <span id="editor-msg" class="form-error"></span>
+          <span id="editor-success" class="form-success"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Quill -->
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <script src="js/nav.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    /* ── Auth guard: author or admin only ── */
+    (function () {
+      if (!api.isLoggedIn() || !api.hasRole('author', 'admin')) {
+        window.location.href = 'login.html?next=new-post.html';
+      }
+    })();
+
+    /* ── Emoji picker ── */
+    const emojiInput = document.getElementById('cover-emoji-input');
+    document.getElementById('emoji-row').addEventListener('click', e => {
+      const btn = e.target.closest('.emoji-btn');
+      if (!btn) return;
+      document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      emojiInput.value = btn.dataset.emoji;
+    });
+
+    /* ── Quill setup ── */
+    const toolbarOptions = [
+      [{ 'header': [1, 2, 3, 4, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['link', 'image'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'align': [] }],
+      ['clean']
+    ];
+
+    const quill = new Quill('#quill-editor', {
+      theme:   'snow',
+      modules: { toolbar: { container: toolbarOptions, handlers: { image: imageUploadHandler } } },
+      placeholder: 'Start writing your post… Use the toolbar above for formatting.'
+    });
+
+    /* ── Custom image upload via backend ── */
+    async function imageUploadHandler() {
+      const input = document.createElement('input');
+      input.type  = 'file';
+      input.accept = 'image/*';
+      input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+        try {
+          const url   = await api.uploadImage(file);
+          const range = quill.getSelection(true);
+          quill.insertEmbed(range.index, 'image', 'http://localhost:3001' + url);
+          quill.setSelection(range.index + 1);
+        } catch (err) {
+          showMsg(err.message, 'error');
+        }
+      };
+      input.click();
+    }
+
+    /* ── LaTeX helpers ── */
+    function fillLatex(el) {
+      document.getElementById('latex-input').value = el.textContent.trim();
+    }
+    function insertLatex(mode) {
+      const expr  = document.getElementById('latex-input').value.trim();
+      if (!expr) return;
+      const range = quill.getSelection(true) || { index: quill.getLength(), length: 0 };
+      const text  = mode === 'inline' ? ` $${expr}$ ` : `\n$$${expr}$$\n`;
+      quill.insertText(range.index, text, 'user');
+      quill.setSelection(range.index + text.length);
+    }
+
+    /* ── Draft / Edit mode ── */
+    let editPostId = null;
+    const qp = new URLSearchParams(window.location.search);
+    if (qp.get('edit')) {
+      editPostId = parseInt(qp.get('edit'));
+      document.getElementById('page-title').textContent = '✏️ Edit Post';
+      loadDraft(editPostId);
+    }
+
+    async function loadDraft(id) {
+      try {
+        // Try by id via slug — we need to fetch all posts
+        const { posts } = await api.get('/posts?limit=1000');
+        const post = posts.find(p => p.id === id);
+        if (!post) return;
+        // Fetch full post body via slug
+        const full = await api.get('/posts/' + post.slug);
+        document.getElementById('title').value   = full.title;
+        document.getElementById('excerpt').value = full.excerpt || '';
+        document.getElementById('category').value = full.category;
+        emojiInput.value = full.cover_emoji || '📝';
+        quill.root.innerHTML = full.body;
+      } catch (err) {
+        showMsg('Could not load post: ' + err.message, 'error');
+      }
+    }
+
+    /* ── Submit ── */
+    async function submitPost(published) {
+      const title      = document.getElementById('title').value.trim();
+      const excerpt    = document.getElementById('excerpt').value.trim();
+      const category   = document.getElementById('category').value;
+      const cover_emoji = emojiInput.value.trim() || '📝';
+      const body       = quill.root.innerHTML.trim();
+
+      if (!title) { showMsg('A title is required.', 'error'); return; }
+      if (body === '<p><br></p>' || !body) { showMsg('Post body cannot be empty.', 'error'); return; }
+
+      document.getElementById('publish-btn').disabled = true;
+      document.getElementById('draft-btn').disabled   = true;
+      clearMsg();
+
+      const payload = { title, excerpt, body, category, cover_emoji, published };
+      try {
+        let post;
+        if (editPostId) {
+          post = await api.put('/posts/' + editPostId, payload);
+        } else {
+          post = await api.post('/posts', payload);
+        }
+        showMsg(published ? '🎉 Post published!' : '💾 Draft saved!', 'success');
+        setTimeout(() => {
+          window.location.href = published ? `post.html?slug=${post.slug}` : 'admin.html';
+        }, 1200);
+      } catch (err) {
+        showMsg(err.message || 'Failed to save post.', 'error');
+        document.getElementById('publish-btn').disabled = false;
+        document.getElementById('draft-btn').disabled   = false;
+      }
+    }
+
+    document.getElementById('publish-btn').addEventListener('click', () => submitPost(true));
+    document.getElementById('draft-btn').addEventListener('click',   () => submitPost(false));
+
+    function showMsg(msg, type) {
+      const el = type === 'error'
+        ? document.getElementById('editor-msg')
+        : document.getElementById('editor-success');
+      const other = type === 'error'
+        ? document.getElementById('editor-success')
+        : document.getElementById('editor-msg');
+      el.textContent  = msg;
+      other.textContent = '';
+    }
+    function clearMsg() {
+      document.getElementById('editor-msg').textContent     = '';
+      document.getElementById('editor-success').textContent = '';
+    }
+  </script>
+</body>
+</html>

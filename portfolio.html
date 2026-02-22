@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="asgineer – Portfolio of engineering and maker projects" />
+  <title>asgineer | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .portfolio-card .card-image {
+      position: relative;
+      height: 220px;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .portfolio-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .portfolio-card .card-image .emoji-placeholder {
+      font-size: 4rem;
+    }
+    .cat-filter { margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <main class="page-wrapper">
+
+    <div class="page-banner">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="sep">›</span>
+          <span>Portfolio</span>
+        </div>
+        <h1>Portfolio</h1>
+        <p>Engineering projects, research work, and personal builds.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+
+        <!-- Category filter -->
+        <div class="filter-bar cat-filter fade-up">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="robotics">Robotics</button>
+          <button class="filter-btn" data-filter="software">Software</button>
+          <button class="filter-btn" data-filter="diy">DIY / Hardware</button>
+          <button class="filter-btn" data-filter="academic">Academic</button>
+        </div>
+
+        <!-- Portfolio grid -->
+        <div class="portfolio-grid" id="portfolio-grid">
+
+          <!-- Project 1 -->
+          <div class="card portfolio-card blog-post-item" data-category="robotics">
+            <div class="card-image">
+              <div class="emoji-placeholder">🦾</div>
+              <div class="portfolio-overlay">
+                <a href="posts/beckhoff-exoskeleton.html">Details</a>
+                <a href="https://github.com/asgineer/beckhoff-exoskeleton" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">Robotics · Research</div>
+              <h3 class="card-title">Beckhoff-Controlled Upper-Limb Exoskeleton</h3>
+              <p class="card-excerpt">
+                A tendon-driven exoskeleton for upper-limb rehabilitation, 
+                controlled in real-time with TwinCAT 3 on a Beckhoff EtherCAT network.
+              </p>
+              <div class="card-meta">
+                <span>2023</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">TwinCAT</span>
+                  <span class="tag">Robotics</span>
+                  <span class="tag">SolidWorks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="card portfolio-card blog-post-item" data-category="diy">
+            <div class="card-image">
+              <div class="emoji-placeholder">🔬</div>
+              <div class="portfolio-overlay">
+                <a href="posts/diy-cnc.html">Details</a>
+                <a href="https://github.com/asgineer" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">DIY · Hardware</div>
+              <h3 class="card-title">DIY 3-Axis CNC Router</h3>
+              <p class="card-excerpt">
+                Designed and built a desktop CNC router from scratch using aluminium extrusions,
+                NEMA stepper motors, and GRBL firmware. Capable of wood, foam, and soft PCBs.
+              </p>
+              <div class="card-meta">
+                <span>2022</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">GRBL</span>
+                  <span class="tag">Stepper Motors</span>
+                  <span class="tag">CAM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="card portfolio-card blog-post-item" data-category="software">
+            <div class="card-image">
+              <div class="emoji-placeholder">📊</div>
+              <div class="portfolio-overlay">
+                <a href="posts/simulink-control.html">Details</a>
+                <a href="https://github.com/asgineer" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">Software · Control</div>
+              <h3 class="card-title">DC Motor Adaptive Controller (Simulink)</h3>
+              <p class="card-excerpt">
+                Model Reference Adaptive Control (MRAC) scheme for a DC motor, 
+                implemented in MATLAB/Simulink with hardware-in-the-loop (HIL) testing.
+              </p>
+              <div class="card-meta">
+                <span>2022</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">MATLAB</span>
+                  <span class="tag">Simulink</span>
+                  <span class="tag">Control</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="card portfolio-card blog-post-item" data-category="diy">
+            <div class="card-image">
+              <div class="emoji-placeholder">🏋️</div>
+              <div class="portfolio-overlay">
+                <a href="posts/diy-workbench.html">Details</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">DIY · Woodworking</div>
+              <h3 class="card-title">Mobile Workshop Workbench</h3>
+              <p class="card-excerpt">
+                Built a sturdy, mobile wood workbench with a vise, storage cabinet, 
+                and integrated power strip. Designed in SolidWorks before cutting any wood.
+              </p>
+              <div class="card-meta">
+                <span>2023</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">Woodworking</span>
+                  <span class="tag">SolidWorks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="card portfolio-card blog-post-item" data-category="academic">
+            <div class="card-image">
+              <div class="emoji-placeholder">📝</div>
+              <div class="portfolio-overlay">
+                <a href="posts/msc-thesis.html">Details</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">Academic · Thesis</div>
+              <h3 class="card-title">M.Sc. Thesis: Tendon-Driven Exoskeleton</h3>
+              <p class="card-excerpt">
+                Full mechanical design, actuator selection, control architecture, and 
+                clinical pilot study of a 4-DOF upper-limb rehabilitation exoskeleton.
+              </p>
+              <div class="card-meta">
+                <span>2023</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">Research</span>
+                  <span class="tag">Biomechanics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="card portfolio-card blog-post-item" data-category="software">
+            <div class="card-image">
+              <div class="emoji-placeholder">🌐</div>
+              <div class="portfolio-overlay">
+                <a href="#">Details</a>
+                <a href="https://github.com/asgineer/asgineer.github.io" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-category">Software · Web</div>
+              <h3 class="card-title">This Website</h3>
+              <p class="card-excerpt">
+                Personal website built from scratch using vanilla HTML, CSS, and JavaScript. 
+                Hosted on GitHub Pages. Designed to be fast, accessible, and clean.
+              </p>
+              <div class="card-meta">
+                <span>2024</span>
+                <div class="skills-grid" style="margin:0">
+                  <span class="tag">HTML</span>
+                  <span class="tag">CSS</span>
+                  <span class="tag">JavaScript</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /portfolio-grid -->
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/nav.js"></script>
+  <script>
+    // Portfolio filter (re-using .filter-btn + data-category logic)
+    document.querySelectorAll('.cat-filter .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-filter .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.filter;
+        document.querySelectorAll('#portfolio-grid .blog-post-item').forEach(card => {
+          card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

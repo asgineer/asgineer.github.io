@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>asgineer | Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .auth-wrap {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex; align-items: center; justify-content: center; padding: 3rem 1rem;
+    }
+    .auth-card {
+      background: var(--color-bg-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius); box-shadow: var(--shadow-lg);
+      padding: 2.5rem 2rem; width: 100%; max-width: 440px;
+    }
+    .auth-logo { text-align: center; font-size: 1.8rem; font-weight: 800; margin-bottom: .3rem; }
+    .auth-logo span { color: var(--color-accent); }
+    .auth-subtitle { text-align: center; color: var(--color-text-muted); margin-bottom: 2rem; font-size: .93rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; margin-bottom: .4rem; font-weight: 600; font-size: .88rem; }
+    .form-group input {
+      width: 100%; padding: .7rem 1rem; border: 1.5px solid var(--color-border);
+      border-radius: var(--radius); font-size: .95rem; font-family: var(--font-main);
+      transition: border-color var(--transition); background: var(--color-bg);
+    }
+    .form-group input:focus { outline: none; border-color: var(--color-accent); }
+    .form-group input.invalid { border-color: #e74c3c; }
+    .form-group input.valid   { border-color: #2ecc71; }
+    .hint { font-size: .78rem; color: var(--color-text-muted); margin-top: .25rem; }
+    .form-error { color: #e74c3c; font-size: .85rem; margin-top: .3rem; background: rgba(231,76,60,.07);
+      padding: .5rem .8rem; border-radius: 4px; display: none; }
+    .form-error.show { display: block; }
+    .form-success { color: #27ae60; font-size: .85rem; margin-top: .3rem; background: rgba(39,174,96,.07);
+      padding: .5rem .8rem; border-radius: 4px; display: none; }
+    .form-success.show { display: block; }
+    .btn-block { width: 100%; padding: .75rem; font-size: 1rem; margin-top: .5rem; }
+    .auth-switch { text-align: center; margin-top: 1.5rem; font-size: .9rem; color: var(--color-text-muted); }
+    .role-note {
+      background: rgba(46,134,222,.07); border: 1px solid rgba(46,134,222,.2);
+      border-radius: var(--radius); padding: .8rem 1rem; font-size: .83rem;
+      color: var(--color-text-muted); margin-bottom: 1.2rem;
+    }
+    .role-note strong { color: var(--color-accent); }
+    .strength-bar { height: 4px; border-radius: 2px; background: var(--color-border);
+      margin-top: .4rem; overflow: hidden; }
+    .strength-fill { height: 100%; border-radius: 2px; width: 0;
+      transition: width .3s ease, background .3s ease; }
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 2.8rem; }
+    .toggle-pw { position: absolute; right: .8rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--color-text-muted);
+      font-size: .85rem; padding: .2rem; }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-logo">as<span>gineer</span></div>
+        <p class="auth-subtitle">Create your account</p>
+
+        <div class="role-note">
+          ℹ️ New accounts are created as <strong>User</strong>.
+          Authorship (posting to the blog) is granted by an <strong>Admin</strong>.
+        </div>
+
+        <form id="signup-form" novalidate>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="yourname"
+              autocomplete="username" required minlength="3" maxlength="40" />
+            <div class="hint">3–40 characters, letters / numbers / underscores</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com"
+              autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" name="password" placeholder="Min. 6 characters"
+                autocomplete="new-password" required minlength="6" />
+              <button type="button" class="toggle-pw" id="toggle-pw">Show</button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+          </div>
+          <div class="form-group">
+            <label for="confirm">Confirm Password</label>
+            <input type="password" id="confirm" name="confirm" placeholder="Repeat password"
+              autocomplete="new-password" required />
+          </div>
+
+          <div class="form-error"   id="signup-error"></div>
+          <div class="form-success" id="signup-success"></div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Create Account</button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="login.html">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/nav.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    if (api.isLoggedIn()) window.location.href = 'index.html';
+
+    const form       = document.getElementById('signup-form');
+    const errEl      = document.getElementById('signup-error');
+    const successEl  = document.getElementById('signup-success');
+    const submitBtn  = document.getElementById('submit-btn');
+    const pwInput    = document.getElementById('password');
+    const togglePw   = document.getElementById('toggle-pw');
+    const strengthFill = document.getElementById('strength-fill');
+
+    togglePw.addEventListener('click', () => {
+      const show = pwInput.type === 'password';
+      pwInput.type = show ? 'text' : 'password';
+      togglePw.textContent = show ? 'Hide' : 'Show';
+    });
+
+    // Password strength indicator
+    pwInput.addEventListener('input', () => {
+      const v   = pwInput.value;
+      let score = 0;
+      if (v.length >= 6)  score++;
+      if (v.length >= 10) score++;
+      if (/[A-Z]/.test(v)) score++;
+      if (/[0-9]/.test(v)) score++;
+      if (/[^A-Za-z0-9]/.test(v)) score++;
+      const pct   = score * 20;
+      const color = pct <= 20 ? '#e74c3c' : pct <= 60 ? '#f39c12' : '#2ecc71';
+      strengthFill.style.width      = pct + '%';
+      strengthFill.style.background = color;
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      errEl.classList.remove('show');
+      successEl.classList.remove('show');
+
+      const username = document.getElementById('username').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const password = pwInput.value;
+      const confirm  = document.getElementById('confirm').value;
+
+      if (!username || !email || !password || !confirm) {
+        return showError('Please fill in all fields.');
+      }
+      if (!/^[A-Za-z0-9_]{3,40}$/.test(username)) {
+        return showError('Username: 3–40 chars, only letters, numbers, underscores.');
+      }
+      if (password !== confirm) {
+        return showError('Passwords do not match.');
+      }
+      if (password.length < 6) {
+        return showError('Password must be at least 6 characters.');
+      }
+
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Creating account…';
+
+      try {
+        await api.signup(username, email, password);
+        successEl.textContent = '✅ Account created! Redirecting…';
+        successEl.classList.add('show');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1200);
+      } catch (err) {
+        showError(err.message || 'Sign up failed. Please try again.');
+      }
+    });
+
+    function showError(msg) {
+      errEl.textContent = msg;
+      errEl.classList.add('show');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Create Account';
+    }
+  </script>
+</body>
+</html>

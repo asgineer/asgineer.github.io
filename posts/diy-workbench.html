@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>asgineer | Building a Mobile Workshop Workbench</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <main class="page-wrapper">
+
+    <div class="post-hero">
+      <div class="container">
+        <div class="breadcrumb" style="margin-bottom:1rem">
+          <a href="../index.html" style="color:rgba(255,255,255,.6)">Home</a>
+          <span class="sep">›</span>
+          <a href="../blog.html?cat=diy" style="color:rgba(255,255,255,.6)">DIY</a>
+          <span class="sep">›</span>
+          <span>Mobile Workshop Workbench</span>
+        </div>
+        <span class="filter-tag tag-diy" style="margin-bottom:.8rem;display:inline-block">DIY</span>
+        <h1>Building a Mobile Workshop Workbench</h1>
+        <div class="post-meta-bar">
+          <span>📅 November 4, 2023</span>
+          <span>⏱ 9 min read</span>
+          <span>✏️ asgineer</span>
+        </div>
+      </div>
+    </div>
+
+    <article class="post-content">
+
+      <p>
+        My workshop had a problem: every horizontal surface was also a storage area for 
+        whatever landed on it most recently. I needed a proper workbench — one that could 
+        be moved, levelled, stored under exactly, and actually keep things organised.
+        After two failed attempts with off-the-shelf solutions, I designed and built my own.
+      </p>
+
+      <h2>Design Goals</h2>
+      <ul>
+        <li>Work surface: 120 × 60 cm at ergonomic working height (90 cm for me)</li>
+        <li>Integrated face vise for woodworking</li>
+        <li>Four locking swivel casters — fully mobile when unlocked</li>
+        <li>Lower shelf + lockable cabinet with three drawers</li>
+        <li>Built-in power strip (4× socket, 2× USB-C)</li>
+        <li>Total material cost: under €350</li>
+      </ul>
+
+      <h2>Design Process</h2>
+      <p>
+        I modelled the entire bench in SolidWorks before buying a single piece of timber. 
+        I'm an engineer; guessing dimensions isn't in my DNA. The model let me run an 
+        FEA check on the leg joints and confirm that 44 × 44 mm pine with M10 bolts would
+        handle 200 kg static load without meaningful deflection.
+      </p>
+      <p>
+        The corner joints use a mix of pocket screws (Kreg Jig), glue, and M10 carriage bolts 
+        for the primary frame — overkill structurally, but I wanted it to last a decade.
+      </p>
+
+      <h2>Bill of Materials</h2>
+      <ul>
+        <li>44 × 44 mm pine battens × 12 m — frame</li>
+        <li>19 mm birch plywood, 120 × 60 cm × 2 sheets — top + shelf</li>
+        <li>18 mm MDF, assorted — cabinet sides and drawers</li>
+        <li>Locking swivel casters, 75 mm, × 4 (rated 80 kg each)</li>
+        <li>Record 52½ quick-release vise</li>
+        <li>Drawer slides, full extension, × 3 pairs</li>
+        <li>Cabinet lock + door hinges</li>
+        <li>Screws, bolts, glue, sandpaper, danish oil finish</li>
+      </ul>
+      <p><strong>Total spend: ~€310</strong></p>
+
+      <h2>Build Sequence</h2>
+
+      <h3>1. Frame</h3>
+      <p>
+        Cut all pine to length with a mitre saw. Assemble the leg pairs first with pocket screws 
+        and glue, then join with the horizontal rails. Check square obsessively at this stage — 
+        errors compound badly.
+      </p>
+
+      <h3>2. Worktop</h3>
+      <p>
+        The top is two layers of 18 mm birch plywood laminated together with PVA and clamped 
+        overnight. This gives a 36 mm thick slab that resists racking and feels solid under a mallet.
+        Rounded the edges with a ⅜" roundover router bit, then three coats of danish oil.
+      </p>
+
+      <h3>3. Cabinet &amp; Drawers</h3>
+      <p>
+        The lower cabinet runs full-width below the shelf. Three 150 mm drawers on full-extension 
+        slides for small tools and hardware. The door has a simple cam lock — not high security, 
+        but keeps dust out of the stored items.
+      </p>
+
+      <h3>4. Vise</h3>
+      <p>
+        The Record 52½ is bolted through the underside of the top with four M10 bolts into 
+        a 44 × 68 mm backing block. The vise jaw is flush with the worktop surface when fully open.
+        This was the most satisfying part to install — the first clamp of a piece of wood in a 
+        proper vise is deeply satisfying.
+      </p>
+
+      <h2>Lessons Learned</h2>
+      <ul>
+        <li>Cut a full-size cardboard mockup before committing to plywood. Saved me from one sizing mistake.</li>
+        <li>Pocket screws alone are not enough for the primary frame joints under vise loads — add bolts.</li>
+        <li>MDF drinks finish. Seal edges before painting or they'll swell.</li>
+        <li>Buy better drawer slides. The cheap ones I ordered first were the only component I replaced.</li>
+      </ul>
+
+      <p>
+        The bench has been in daily use for six months now and I couldn't be happier. 
+        Plans (SolidWorks + PDF cuts list) available on request.
+      </p>
+
+      <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border)">
+        <a href="../blog.html" class="btn btn-outline">← Back to Blog</a>
+        <a href="../blog.html?cat=diy" class="btn btn-outline" style="margin-left:.7rem">More DIY Posts</a>
+      </div>
+
+    </article>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/nav.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
