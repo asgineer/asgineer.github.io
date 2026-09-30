@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }} - {{ page.title | default: site.description }}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Small custom additions */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-normal tracking-normal flex flex-col min-h-screen">
+    
+    <nav class="bg-white shadow-sm border-b border-gray-200 w-full z-10 sticky top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="{{ site.baseurl }}/" class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition">{{ site.title }}</a>
+                <div class="space-x-6 flex font-semibold text-gray-600">
+                    <a href="{{ site.baseurl }}/" class="hover:text-blue-600 transition">Home</a>
+                    <a href="{{ site.baseurl }}/resume" class="hover:text-blue-600 transition">Resume</a>
+                    <a href="{{ site.baseurl }}/portfolio" class="hover:text-blue-600 transition">Portfolio</a>
+                    <a href="{{ site.baseurl }}/blog" class="hover:text-blue-600 transition">Blog</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-10">
+        {{ content }}
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-8 mt-auto">
+        <div class="space-x-6 mb-6">
+            {% if site.author.email %}
+            <a href="mailto:{{ site.author.email }}" class="text-gray-400 hover:text-white transition"><i class="fas fa-envelope fa-xl"></i></a>
+            {% endif %}
+            {% if site.author.linkedin %}
+            <a href="https://linkedin.com/in/{{ site.author.linkedin }}" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-linkedin fa-xl"></i></a>
+            {% endif %}
+            {% if site.author.github %}
+            <a href="https://github.com/{{ site.author.github }}" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-github fa-xl"></i></a>
+            {% endif %}
+            {% if site.author.orcid %}
+            <a href="https://orcid.org/{{ site.author.orcid }}" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-orcid fa-xl"></i></a>
+            {% endif %}
+        </div>
+        <p class="text-gray-400 text-sm">&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}. Built with Jekyll & Tailwind CSS.</p>
+    </footer>
+</body>
+</html>

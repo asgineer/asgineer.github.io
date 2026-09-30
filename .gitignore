@@ -1,7 +1,0 @@
-# User-uploaded images (stored server-side on Render, not in the repo)
-uploads/
-
-# OS / editor
-.DS_Store
-Thumbs.db
-.vscode/

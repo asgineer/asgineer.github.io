@@ -1,158 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="asgineer – Engineer, maker and explorer. Personal website." />
-  <title>asgineer | Home</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
+---
+layout: default
+title: Home
+---
 
-  <!-- Navigation injected by nav.js -->
-  <div id="nav-placeholder"></div>
-
-  <main class="page-wrapper">
-
-    <!-- ── Hero ───────────────────────────────── -->
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-avatar">👷</div>
-        <h1>Hi, I'm <span style="color:#2e86de">asgineer</span></h1>
-        <p class="role">
-          <span id="typed-role"
-            data-phrases='["Mechanical Engineer","Robotics Enthusiast","Maker & Builder","Travel Lover","DIY Hobbyist"]'
-          ></span><span style="color:#2e86de;animation:blink 1s infinite">|</span>
+<div class="flex flex-col md:flex-row items-center gap-12 mt-8 md:mt-16">
+    <div class="w-full md:w-1/3 flex justify-center">
+        <div class="w-64 h-64 md:w-80 md:h-80 bg-gray-200 rounded-full flex items-center justify-center shadow-xl border-8 border-white overflow-hidden relative">
+            <i class="fas fa-user-tie text-8xl text-gray-400"></i>
+            <!-- TO DO: Replace the icon above with your actual photo: -->
+            <!-- <img src="{{ site.baseurl }}/assets/img/profile.jpg" alt="Profile Photo" class="w-full h-full object-cover"> -->
+        </div>
+    </div>
+    
+    <div class="w-full md:w-2/3 space-y-6">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">Hello, I'm <span class="text-blue-600">{{ site.author.name }}</span></h1>
+        <h2 class="text-2xl md:text-3xl text-gray-600 font-medium">Mechanical Engineer</h2>
+        
+        <p class="text-lg text-gray-700 leading-relaxed max-w-2xl">
+            Welcome to my personal website. I am a passionate mechanical engineer specializing in [Your Specialization, e.g., thermofluids, structural analysis, CAD design, robotics]. With a strong foundation in problem-solving and innovative design, I aim to create efficient, reliable, and sustainable engineering solutions.
         </p>
-        <div class="hero-links">
-          <a href="#about">About Me</a>
-          <a href="resume.html">Resume</a>
-          <a href="portfolio.html">Portfolio</a>
-          <a href="blog.html">Blog</a>
-        </div>
-      </div>
-    </section>
 
-    <!-- ── About Me ───────────────────────────── -->
-    <section class="section" id="about">
-      <div class="container">
-        <div class="about-grid">
-
-          <!-- Sidebar -->
-          <aside class="about-sidebar fade-up">
-            <div style="width:100%;height:280px;background:linear-gradient(135deg,#1a2940,#2a4365);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:6rem;">👷</div>
-            <ul class="info-list" style="margin-top:1.5rem">
-              <li><span class="label">Name</span> A. S. Gineer</li>
-              <li><span class="label">Based In</span> Istanbul, Turkey</li>
-              <li><span class="label">Field</span> Mechanical Engineering</li>
-              <li><span class="label">Focus</span> Robotics &amp; Automation</li>
-              <li><span class="label">Language</span> English / Turkish</li>
-              <li>
-                <span class="label">Email</span>
-                <a href="#" data-copy-email="hello@asgineer.dev">hello@asgineer.dev</a>
-              </li>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mt-8">
+            <h3 class="text-xl font-bold mb-6 text-gray-800 border-b pb-2">Quick Information</h3>
+            <ul class="space-y-4 text-gray-700">
+                <li class="flex items-center"><div class="w-8 flex justify-center text-blue-600"><i class="fas fa-map-marker-alt fa-lg"></i></div> <strong>Location:</strong> <span class="ml-3">{{ site.author.location }}</span></li>
+                <li class="flex items-center"><div class="w-8 flex justify-center text-blue-600"><i class="fas fa-building fa-lg"></i></div> <strong>Company:</strong> <span class="ml-3">{{ site.author.company }}</span></li>
+                <li class="flex items-center"><div class="w-8 flex justify-center text-blue-600"><i class="fas fa-envelope fa-lg"></i></div> <strong>Email:</strong> <a href="mailto:{{ site.author.email }}" class="ml-3 text-blue-600 hover:underline transition">{{ site.author.email }}</a></li>
+                <li class="flex items-center"><div class="w-8 flex justify-center text-blue-600"><i class="fab fa-orcid fa-lg"></i></div> <strong>ORCID:</strong> <a href="https://orcid.org/{{ site.author.orcid }}" target="_blank" class="ml-3 text-blue-600 hover:underline transition">{{ site.author.orcid }}</a></li>
             </ul>
-            <div style="margin-top:1.5rem;display:flex;gap:.7rem;flex-wrap:wrap">
-              <a href="resume.html" class="btn btn-primary" style="flex:1;text-align:center">Resume</a>
-              <a href="portfolio.html" class="btn btn-outline" style="flex:1;text-align:center">Portfolio</a>
-            </div>
-          </aside>
-
-          <!-- Main content -->
-          <div class="about-content">
-            <span class="section-title fade-up">About Me</span>
-            <p class="section-subtitle fade-up">Engineer by training, maker by passion.</p>
-
-            <p class="fade-up">
-              I'm a mechanical engineer with a deep fascination for robotics, mechatronics, and intelligent systems.
-              My work revolves around bridging the gap between theoretical engineering and hands-on, real-world implementations —
-              whether it's a tendon-driven exoskeleton, a custom-built CNC machine, or a weekend hiking adventure.
-            </p>
-            <p class="fade-up">
-              During my academic years I explored control systems, biomechanics, and human-robot interaction.
-              Outside the lab I love tinkering — building things with my hands, travelling to new places,
-              and writing about whatever catches my curiosity.
-            </p>
-            <p class="fade-up">
-              This site is a living record of what I build, where I go, and what I learn along the way.
-            </p>
-
-            <!-- Stats -->
-            <div class="stat-cards fade-up">
-              <div class="stat-card"><div class="number">5+</div><div class="label">Years of Engineering</div></div>
-              <div class="stat-card"><div class="number">12+</div><div class="label">Projects Completed</div></div>
-              <div class="stat-card"><div class="number">20+</div><div class="label">Countries Visited</div></div>
-              <div class="stat-card"><div class="number">30+</div><div class="label">Blog Posts</div></div>
-            </div>
-
-            <!-- Tech skills -->
-            <h3 class="fade-up" style="margin-bottom:.8rem">Technical Skills</h3>
-            <div class="skills-grid fade-up">
-              <span class="tag">SolidWorks</span>
-              <span class="tag">MATLAB / Simulink</span>
-              <span class="tag">ROS / ROS2</span>
-              <span class="tag">Python</span>
-              <span class="tag">C / C++</span>
-              <span class="tag">TwinCAT / Beckhoff</span>
-              <span class="tag">FEA / FEM</span>
-              <span class="tag">3D Printing</span>
-              <span class="tag">Arduino</span>
-              <span class="tag">Raspberry Pi</span>
-              <span class="tag">LaTeX</span>
-              <span class="tag">Git</span>
-            </div>
-
-            <!-- Interests -->
-            <h3 class="fade-up" style="margin:2rem 0 .8rem">Interests &amp; Hobbies</h3>
-            <div class="grid-3 fade-up" style="margin-top:1rem">
-              <div class="card" style="padding:1.2rem">
-                <div style="font-size:2rem;margin-bottom:.5rem">🤖</div>
-                <h4 style="margin-bottom:.3rem">Robotics</h4>
-                <p style="font-size:.88rem;color:var(--color-text-muted)">Exoskeletons, actuators, and human-robot interaction systems.</p>
-              </div>
-              <div class="card" style="padding:1.2rem">
-                <div style="font-size:2rem;margin-bottom:.5rem">🏔️</div>
-                <h4 style="margin-bottom:.3rem">Travel</h4>
-                <p style="font-size:.88rem;color:var(--color-text-muted)">Exploring mountain trails, hidden towns, and new cultures.</p>
-              </div>
-              <div class="card" style="padding:1.2rem">
-                <div style="font-size:2rem;margin-bottom:.5rem">🔧</div>
-                <h4 style="margin-bottom:.3rem">DIY Making</h4>
-                <p style="font-size:.88rem;color:var(--color-text-muted)">Workshops, tools, electronics, and building things from scratch.</p>
-              </div>
-            </div>
-
-          </div><!-- /about-content -->
-        </div><!-- /about-grid -->
-      </div>
-    </section>
-
-    <!-- ── Quick links to other sections ─────── -->
-    <section class="section" style="background:var(--color-primary);padding:4rem 0">
-      <div class="container" style="text-align:center">
-        <h2 style="color:#fff;margin-bottom:.5rem">Explore More</h2>
-        <p style="color:rgba(255,255,255,.7);margin-bottom:2rem">Dive into my projects, experience, and stories.</p>
-        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-          <a href="resume.html"    class="btn btn-primary">View Resume</a>
-          <a href="portfolio.html" class="btn" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4)">See Portfolio</a>
-          <a href="blog.html"      class="btn" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4)">Read the Blog</a>
         </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer injected by nav.js -->
-  <div id="footer-placeholder"></div>
-
-  <style>
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  </style>
-
-  <script src="js/nav.js"></script>
-  <script src="js/main.js"></script>
-</body>
-</html>
+        
+        <div class="pt-4 flex gap-4">
+            <a href="{{ site.baseurl }}/portfolio" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">View My Work</a>
+            <a href="{{ site.baseurl }}/resume" class="bg-white hover:bg-gray-50 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-md border border-gray-200 transition">Read Resume</a>
+        </div>
+    </div>
+</div>

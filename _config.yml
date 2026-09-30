@@ -1,0 +1,23 @@
+title: Asgineer
+description: Mechanical Engineer Portfolio & Blog
+baseurl: ""
+url: "https://asgineer.github.io"
+
+author:
+  name: Your Name # UPDATE THIS
+  location: "City, Country" # UPDATE THIS
+  company: "Current Company" # UPDATE THIS
+  email: "your.email@example.com" # UPDATE THIS
+  linkedin: "your-linkedin-id" # UPDATE THIS
+  github: "asgineer"
+  orcid: "0000-0000-0000-0000" # UPDATE THIS
+
+collections:
+  portfolio:
+    output: true
+    permalink: /portfolio/:title/
+
+# Exclude unnecessary files from being built
+exclude:
+  - README.md
+  - LICENSE

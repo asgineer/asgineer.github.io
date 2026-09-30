@@ -1,177 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="asgineer – Blog articles on technology, travel, and DIY projects" />
-  <title>asgineer | Blog</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
+---
+layout: default
+title: Blog
+---
 
-  <div id="nav-placeholder"></div>
+<div class="mb-12">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Engineering Blog</h1>
+    <p class="text-xl text-gray-600 max-w-3xl">
+        Thoughts, tutorials, and insights on mechanical engineering, manufacturing, and technology.
+    </p>
+</div>
 
-  <main class="page-wrapper">
-
-    <!-- Banner -->
-    <div class="page-banner">
-      <div class="container">
-        <div class="breadcrumb">
-          <a href="index.html">Home</a>
-          <span class="sep">›</span>
-          <span>Blog</span>
+<div class="space-y-8 max-w-4xl">
+    {% for post in site.posts %}
+    <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4 text-sm font-medium text-blue-600 mb-3">
+            {% for category in post.categories %}
+            <span class="bg-blue-50 px-3 py-1 rounded-full">{{ category }}</span>
+            {% endfor %}
+            <span class="text-gray-500"><i class="far fa-calendar-alt mr-1"></i> {{ post.date | date: "%B %d, %Y" }}</span>
         </div>
-        <h1>Blog</h1>
-        <p>Thoughts, tutorials, adventures, and builds.</p>
-      </div>
-    </div>
+        
+        <h2 class="text-3xl font-bold mb-4 text-gray-900 hover:text-blue-600 transition-colors">
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+        </h2>
+        
+        <p class="text-gray-600 mb-6 text-lg line-clamp-3">
+            {{ post.excerpt | strip_html | truncatewords: 40 }}
+        </p>
+        
+        <a href="{{ site.baseurl }}{{ post.url }}" class="inline-flex items-center justify-center bg-gray-50 hover:bg-blue-50 text-blue-600 font-semibold py-2 px-6 rounded-lg transition-colors border border-gray-200 hover:border-blue-200">
+            Read Article <i class="fas fa-arrow-right ml-2 text-sm"></i>
+        </a>
+    </article>
+    {% endfor %}
+</div>
 
-    <section class="section">
-      <div class="container">
-
-        <!-- Category filter tabs -->
-        <div class="filter-bar fade-up">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="technical">⚙️ Technical</button>
-          <button class="filter-btn" data-filter="travel">🏔️ Travel</button>
-          <button class="filter-btn" data-filter="diy">🔧 DIY</button>
-        </div>
-
-        <!-- Author "Write a post" shortcut -->
-        <div id="author-bar" style="display:none;margin-bottom:1.5rem">
-          <a href="new-post.html" class="btn btn-primary">✍️ Write a New Post</a>
-        </div>
-
-        <!-- Dynamic posts list from API -->
-        <div id="posts-list">
-          <div style="text-align:center;padding:3rem;color:var(--color-text-muted)">
-            Loading posts…
-          </div>
-        </div>
-
-        <div id="no-posts" style="display:none;text-align:center;padding:3rem;color:var(--color-text-muted)">
-          <div style="font-size:3rem;margin-bottom:1rem">📭</div>
-          <p>No posts in this category yet.</p>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <div id="footer-placeholder"></div>
-
-  <script src="js/nav.js"></script>
-  <script src="js/api.js"></script>
-  <script>
-    const CAT_COLORS = { technical:'tag-technical', travel:'tag-travel', diy:'tag-diy', general:'tag-general' };
-
-    let currentCat = new URLSearchParams(window.location.search).get('cat') || 'all';
-
-    /* ── Auth: show "Write a post" for authors/admins ── */
-    (function () {
-      if (api.hasRole('author', 'admin')) {
-        document.getElementById('author-bar').style.display = 'block';
-      }
-    })();
-
-    /* ── Filter buttons ── */
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      if (btn.dataset.filter === currentCat) btn.classList.add('active');
-      else btn.classList.remove('active');
-
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCat = btn.dataset.filter;
-        const url = new URL(window.location);
-        if (currentCat === 'all') url.searchParams.delete('cat');
-        else url.searchParams.set('cat', currentCat);
-        history.replaceState(null, '', url);
-        loadPosts();
-      });
-    });
-
-    /* ── Load posts from API ── */
-    async function loadPosts() {
-      const listEl   = document.getElementById('posts-list');
-      const emptyEl  = document.getElementById('no-posts');
-      listEl.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--color-text-muted)">Loading…</div>';
-      emptyEl.style.display = 'none';
-
-      try {
-        const query   = currentCat !== 'all' ? `?cat=${currentCat}` : '';
-        const { posts } = await api.get('/posts' + query);
-
-        if (!posts.length) {
-          listEl.innerHTML = '';
-          emptyEl.style.display = 'block';
-          return;
-        }
-
-        listEl.innerHTML = posts.map((p, i) => renderPost(p, i === 0 && !query)).join('');
-      } catch (err) {
-        listEl.innerHTML = `
-          <div style="text-align:center;padding:3rem;color:var(--color-text-muted)">
-            <p>⚠️ Could not load posts.<br><small>${err.message}</small></p>
-            <p style="margin-top:.8rem;font-size:.85rem">Make sure the backend server is running (<code>cd backend && npm start</code>)</p>
-          </div>`;
-      }
-    }
-
-    function renderPost(p, featured = false) {
-      const tagClass = CAT_COLORS[p.category] || 'tag-general';
-      const href     = `post.html?slug=${p.slug}`;
-      const thumb    = `background:#1a2940;display:flex;align-items:center;justify-content:center;font-size:${featured?'3rem':'2.5rem'}`;
-
-      if (featured) {
-        return `
-          <div class="blog-list-item" style="margin-bottom:2rem">
-            <div class="blog-list-thumb" style="${thumb};min-width:220px">${p.cover_emoji}</div>
-            <div class="blog-list-body" style="padding:1.5rem">
-              <span class="filter-tag ${tagClass}">${p.category}</span>
-              <h2 style="font-size:1.4rem;margin:.5rem 0 .7rem"><a href="${href}">${esc(p.title)}</a></h2>
-              <p style="font-size:.93rem;color:var(--color-text-muted);margin-bottom:1rem">${esc(p.excerpt||'')}</p>
-              <div class="card-meta">
-                <span>📅 ${fmtDate(p.created_at)}</span>
-                <span>✍️ ${esc(p.author)}</span>
-                <span>❤️ ${p.likes}</span>
-                <span>💬 ${p.comments}</span>
-                <a href="${href}" class="btn btn-primary" style="padding:.35rem 1rem;font-size:.85rem">Read →</a>
-              </div>
-            </div>
-          </div>`;
-      }
-
-      return `
-        <div class="blog-list-item">
-          <div class="blog-list-thumb" style="${thumb}">${p.cover_emoji}</div>
-          <div class="blog-list-body">
-            <span class="filter-tag ${tagClass}">${p.category}</span>
-            <h3 class="card-title"><a href="${href}">${esc(p.title)}</a></h3>
-            <p class="card-excerpt">${esc(p.excerpt||'')}</p>
-            <div class="card-meta">
-              <span>📅 ${fmtDate(p.created_at)}</span>
-              <span>✍️ ${esc(p.author)}</span>
-              <span>❤️ ${p.likes}</span>
-              <span>💬 ${p.comments}</span>
-              <a href="${href}" class="btn btn-outline" style="padding:.3rem .9rem;font-size:.82rem">Read →</a>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    function esc(s) {
-      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-    function fmtDate(s) {
-      return new Date(s).toLocaleDateString('en-GB', { year:'numeric', month:'short', day:'numeric' });
-    }
-
-    loadPosts();
-  </script>
-</body>
-</html>
+{% if site.posts.size == 0 %}
+<div class="text-center py-20 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 max-w-4xl">
+    <i class="fas fa-pen-nib text-6xl text-gray-300 mb-4"></i>
+    <h3 class="text-2xl font-semibold text-gray-600">No blog posts yet</h3>
+    <p class="text-gray-500 mt-2">I am currently working on my first article.</p>
+</div>
+{% endif %}
